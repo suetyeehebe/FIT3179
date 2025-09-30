@@ -1,0 +1,41 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Crude death rate (per 1,000 residents) by State in Malaysia (2023)",
+  "width": 800,
+  "height": 400,
+  "projection": {"type": "equalEarth"},
+  "data": {
+    "url": "https://raw.githubusercontent.com/suetyeehebe/FIT3179/refs/heads/main/js/ne_1.json",
+    "format": {"type": "topojson", "feature": "ne_10m_admin_1_states_provinces"}
+  },
+  "transform": [
+    {"filter": "datum.properties.admin === 'Malaysia'"},
+    {
+      "lookup": "properties.name",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/suetyeehebe/FIT3179/refs/heads/main/data/death_state_clean.csv"
+        },
+        "key": "state",
+        "fields": ["rate"]
+      }
+    },
+    {"calculate": "datum.rate", "as": "Crude death rate per 1,000 people"}
+  ],
+  "mark": {"type": "geoshape"},
+  "encoding": {
+    "color": {
+      "field": "Crude death rate per 1,000 people",
+      "type": "quantitative",
+      "scale": {
+            "type": "threshold",
+            "domain": [3.3, 4.8, 5.9, 7],
+            "range": ["#fee5d9","#fcbba1","#fc9272","#fb6a4a","#cb181d"]
+          }
+    },
+    "tooltip": [
+      {"field": "properties.name", "type": "nominal", "title": "State"},
+      {"field": "Crude death rate (per 1,000 people)", "type": "quantitative"}
+    ]
+  }
+}
