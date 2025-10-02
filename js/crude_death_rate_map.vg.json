@@ -20,12 +20,12 @@
         "fields": ["rate"]
       }
     },
-    {"calculate": "datum.rate", "as": "Crude death rate per 1,000 people"}
+    {"calculate": "datum.rate", "as": "Crude death rate (per 1,000 people)"}
   ],
   "mark": {"type": "geoshape"},
   "encoding": {
     "color": {
-      "field": "Crude death rate per 1,000 people",
+      "field": "Crude death rate (per 1,000 people)",
       "type": "quantitative",
       "scale": {
             "type": "threshold",
